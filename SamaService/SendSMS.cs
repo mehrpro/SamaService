@@ -60,6 +60,34 @@ namespace SamaService
                 Logger.WriteErrorLog(e, "SendOutput");
             }
         }
+
+
+        public static void SendBrithDay(long mobile, string fullName, int id)
+        {
+            try
+            {
+                var sms = new tsmsServiceClient();
+                string[] from = new[] { "30007227001374" };
+                string[] to = new[] { mobile.ToString("00000000000") };
+                string[] content = { $"{fullName} تولدت مبارک\r\n دبستان دخترانه سما بیجار" };
+                var result = sms.sendSms("iaubijar", "M4228056", from, to, content, new string[] { }, "");
+
+                if (result[0] > 0)
+                {
+                    using (var dbx = new ApplicationDbContext())
+                    {
+                        dbx.BirthRegisters.Add(new BirthRegister() { StudentID_FK = id, Registered = DateTime.Today });
+                        var resultSave = dbx.SaveChanges();
+                        Logger.WriteMessageSenderLog(Convert.ToBoolean(resultSave) ? $"Send Input {mobile}" : $"Not Send Input {mobile}");
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Logger.WriteErrorLog(e, "SendOutput");
+            }
+        }
+
     }
 }
 

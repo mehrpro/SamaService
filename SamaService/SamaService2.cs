@@ -1,4 +1,5 @@
-﻿using System.ServiceProcess;
+﻿using System;
+using System.ServiceProcess;
 using System.Timers;
 
 
@@ -7,6 +8,7 @@ namespace SamaService
     public partial class SamaService2 : ServiceBase
     {
         private Timer timer5;
+        private bool sendBrith;
         public SamaService2()
         {
             InitializeComponent();
@@ -29,6 +31,13 @@ namespace SamaService
             SMSSenderProcess.NewTags();
             SMSSenderProcess.UpdateTagID();
             SMSSenderProcess.SMSSender();// پردازش . ارسال پیامک ها
+            if (DateTime.Now.Hour > 16 && !sendBrith)
+            {
+                sendBrith = true;
+                SMSSenderProcess.SMSSenderBirthDay();
+            }
+            if (DateTime.Now.Hour == 1) sendBrith = false;
+
         }
 
         protected override void OnStop()

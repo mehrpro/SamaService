@@ -189,6 +189,7 @@ namespace SamaService
 
 
         #region BirthDay
+
         public static void SMSSenderBirthDay()
         {
 
@@ -196,56 +197,21 @@ namespace SamaService
             {
                 try
                 {
-                    //تمام ثبت های امروز
-                    var qryDayRecorder = db.TagRecorders.
-                        Where(x => x.SMS == false && x.Enables && x.StudentID_FK > 0 && x.TagID_FK > 0).ToList(); // تمام ثبت های امروز
-                    foreach (var item in qryDayRecorder) // جدول بندی تردد ها بر اساس هر تگ که در عین حال فقط و فقط متعلق به یک دانش آموز است
+
+                    var qryStudent = db.Students.ToList();
+                    foreach (var selectStudent in qryStudent)
                     {
-                        var student = db.Students.Find(item.StudentID_FK.Value);
-                        try
+                        if (selectStudent.BrithDate.Date.Month == DateTime.Now.Month &&
+                            selectStudent.BrithDate.Day == DateTime.Now.Day)
                         {
-                            if (item.Type) //ورودی ها 
+                            var res = db.BirthRegisters.Where(x => x.StudentID_FK == selectStudent.ID).ToList();
+                            if (!res.Any(x =>
+                                x.Registered.Date.Year == DateTime.Now.Year &&
+                                x.Registered.Date.Month == DateTime.Now.Month))
                             {
-                                var dat = item.DateTimeRegister.AddSeconds(-120);
-                                var finder = db.TagRecorders.Any(x =>
-                                x.TagID_FK == item.TagID_FK &&
-                                x.DateTimeRegister > dat &&
-                                x.SMS &&
-                                x.Type &&
-                                x.Enables);
-                                if (finder)
-                                {
-                                    item.SMS = true;
-                                    item.Enables = false;
-                                    db.SaveChanges();
-                                }
-                                else
-                                    SendSMS.SendInput(Convert.ToInt64(student.SMS), student.FullName,
-                                        item.DateTimeRegister.Convert_PersianCalender(), item.ID); //ارسال
+                                SendSMS.SendBrithDay(Convert.ToInt64(selectStudent.SMS), selectStudent.FullName,
+                                    selectStudent.ID);
                             }
-                            else
-                            {
-                                var dat = item.DateTimeRegister.AddSeconds(-120);
-                                var finder = db.TagRecorders.Any(x =>
-                                x.TagID_FK == item.TagID_FK &&
-                                x.DateTimeRegister > dat &&
-                                x.SMS &&
-                                x.Type == false &&
-                                x.Enables);
-                                if (finder)
-                                {
-                                    item.SMS = true;
-                                    item.Enables = false;
-                                    db.SaveChanges();
-                                }
-                                else
-                                    SendSMS.SendOutput(Convert.ToInt64(student.SMS), student.FullName,
-                                        item.DateTimeRegister.Convert_PersianCalender(), item.ID); ; //ارسال
-                            }
-                        }
-                        catch (Exception e)
-                        {
-                            Logger.WriteErrorLog(e, "ForEach SMSSender");
                         }
                     }
                 }
