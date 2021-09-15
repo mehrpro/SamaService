@@ -99,7 +99,11 @@ namespace SamaService.Models
                 .WithRequired(x => x.Student)
                 .HasForeignKey(x => x.StudentID_FK)
                 .WillCascadeOnDelete(false);
-
+            builder.Entity<Student>()
+                .HasMany(x => x.BirthRegisters)
+                .WithRequired(x => x.Student)
+                .HasForeignKey(x => x.StudentID_FK)
+                .WillCascadeOnDelete(false);
 
             builder.Entity<StudentTAG>().HasKey(x => x.ID);
             builder.Entity<StudentTAG>().Property(x => x.ID).IsRequired()

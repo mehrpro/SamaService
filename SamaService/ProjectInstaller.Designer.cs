@@ -1,4 +1,6 @@
 ﻿
+using System.ServiceProcess;
+
 namespace SamaService
 {
     partial class ProjectInstaller
@@ -31,6 +33,7 @@ namespace SamaService
         {
             this.serviceProcessInstaller1 = new System.ServiceProcess.ServiceProcessInstaller();
             this.serviceInstaller1 = new System.ServiceProcess.ServiceInstaller();
+            this.serviceProcessInstaller1.Account = ServiceAccount.LocalSystem;
             // 
             // serviceProcessInstaller1
             // 
@@ -39,7 +42,9 @@ namespace SamaService
             // 
             // serviceInstaller1
             // 
-            this.serviceInstaller1.ServiceName = "Service1";
+            this.serviceInstaller1.ServiceName = "SamaSMSService";
+            this.serviceInstaller1.Description = "Sama SMS Sender Service";
+            this.serviceInstaller1.DisplayName = "SamaSMS";
             // 
             // ProjectInstaller
             // 
