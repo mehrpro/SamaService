@@ -124,64 +124,58 @@ namespace SamaService
 
             using (var db = new ApplicationDbContext())
             {
-                try
+                //تمام ثبت های امروز
+                var qryDayRecorder = db.TagRecorders.Where(x => x.SMS == false && x.Enables && x.StudentID_FK > 0 && x.TagID_FK > 0).ToList(); // تمام ثبت های امروز
+                foreach (var item in qryDayRecorder) // جدول بندی تردد ها بر اساس هر تگ که در عین حال فقط و فقط متعلق به یک دانش آموز است
                 {
-                    //تمام ثبت های امروز
-                    var qryDayRecorder = db.TagRecorders.Where(x => x.SMS == false && x.Enables && x.StudentID_FK > 0 && x.TagID_FK > 0).ToList(); // تمام ثبت های امروز
-                    foreach (var item in qryDayRecorder) // جدول بندی تردد ها بر اساس هر تگ که در عین حال فقط و فقط متعلق به یک دانش آموز است
+                    var student = db.Students.Find(item.StudentID_FK.Value);
+                    try
                     {
-                        var student = db.Students.Find(item.StudentID_FK.Value);
-                        try
+                        if (item.Type) //ورودی ها 
                         {
-                            if (item.Type) //ورودی ها 
+                            var dat = item.DateTimeRegister.AddSeconds(-120);
+                            var finder = db.TagRecorders.Any(x =>
+                            x.TagID_FK == item.TagID_FK &&
+                            x.DateTimeRegister > dat &&
+                            x.SMS &&
+                            x.Type &&
+                            x.Enables);
+                            if (finder)
                             {
-                                var dat = item.DateTimeRegister.AddSeconds(-120);
-                                var finder = db.TagRecorders.Any(x =>
-                                x.TagID_FK == item.TagID_FK &&
-                                x.DateTimeRegister > dat &&
-                                x.SMS &&
-                                x.Type &&
-                                x.Enables);
-                                if (finder)
-                                {
-                                    item.SMS = true;
-                                    item.Enables = false;
-                                    db.SaveChanges();
-                                }
-                                else
-                                    SendSMS.SendInput(Convert.ToInt64(student.SMS), student.FullName,
-                                        item.DateTimeRegister.Convert_PersianCalender(), item.ID); //ارسال
+                                item.SMS = true;
+                                item.Enables = false;
+                                db.SaveChanges();
                             }
                             else
-                            {
-                                var dat = item.DateTimeRegister.AddSeconds(-120);
-                                var finder = db.TagRecorders.Any(x =>
-                                x.TagID_FK == item.TagID_FK &&
-                                x.DateTimeRegister > dat &&
-                                x.SMS &&
-                                x.Type == false &&
-                                x.Enables);
-                                if (finder)
-                                {
-                                    item.SMS = true;
-                                    item.Enables = false;
-                                    db.SaveChanges();
-                                }
-                                else
-                                    SendSMS.SendOutput(Convert.ToInt64(student.SMS), student.FullName,
-                                        item.DateTimeRegister.Convert_PersianCalender(), item.ID); ; //ارسال
-                            }
+                                SendSMS.SendInput(Convert.ToInt64(student.SMS), student.FullName,
+                                    item.DateTimeRegister.Convert_PersianCalender(), item.ID); //ارسال
                         }
-                        catch (Exception e)
+                        else
                         {
-                            Logger.WriteErrorLog(e, "ForEach SMSSender");
+                            var dat = item.DateTimeRegister.AddSeconds(-120);
+                            var finder = db.TagRecorders.Any(x =>
+                            x.TagID_FK == item.TagID_FK &&
+                            x.DateTimeRegister > dat &&
+                            x.SMS &&
+                            x.Type == false &&
+                            x.Enables);
+                            if (finder)
+                            {
+                                item.SMS = true;
+                                item.Enables = false;
+                                db.SaveChanges();
+                            }
+                            else
+                                SendSMS.SendOutput(Convert.ToInt64(student.SMS), student.FullName,
+                                    item.DateTimeRegister.Convert_PersianCalender(), item.ID); ; //ارسال
                         }
                     }
+                    catch (Exception e)
+                    {
+                        Logger.WriteErrorLog(e, "خطا در پردازش و ارسال پیامک تردد");
+                    }
                 }
-                catch (Exception e)
-                {
-                    Logger.WriteErrorLog(e, "SMSSender");
-                }
+
             }
         }
 
@@ -217,7 +211,7 @@ namespace SamaService
                 }
                 catch (Exception e)
                 {
-                    Logger.WriteErrorLog(e, "SMSSender");
+                    Logger.WriteErrorLog(e, "خطا در ثبت تبریک تولد");
                 }
             }
         }
