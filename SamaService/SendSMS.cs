@@ -7,11 +7,8 @@ namespace SamaService
 
     public class SendSMS
     {
-
         public static void SendInput(long mobile, string fullName, string inDate, int id)
         {
-
-
             try
             {
                 var sms = new tsmsServiceClient();

@@ -58,6 +58,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DatabaseTransFormerProcess.cs" />
+    <Compile Include="GenericClass.cs" />
+    <Compile Include="Interface\IRepositoryBase.cs" />
     <Compile Include="Migrations\202109150348160_dbcreate.cs" />
     <Compile Include="Migrations\202109150348160_dbcreate.Designer.cs">
       <DependentUpon>202109150348160_dbcreate.cs</DependentUpon>
