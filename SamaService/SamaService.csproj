@@ -89,6 +89,7 @@
     <Compile Include="ProjectInstaller.Designer.cs">
       <DependentUpon>ProjectInstaller.cs</DependentUpon>
     </Compile>
+    <Compile Include="PublicClass.cs" />
     <Compile Include="SendSMS.cs" />
     <Compile Include="SamaService2.cs">
       <SubType>Component</SubType>

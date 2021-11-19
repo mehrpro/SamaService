@@ -14,6 +14,7 @@ namespace SamaService
             {
                 new SamaService2()
             };
+            PublicClass.Send10000 = PublicClass.Send1200 = PublicClass.Send5000 = false;
             ServiceBase.Run(ServicesToRun);
         }
     }
