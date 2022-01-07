@@ -33,18 +33,18 @@ namespace SamaService
         {
             this.serviceProcessInstaller1 = new System.ServiceProcess.ServiceProcessInstaller();
             this.serviceInstaller1 = new System.ServiceProcess.ServiceInstaller();
-            this.serviceProcessInstaller1.Account = ServiceAccount.LocalSystem;
             // 
             // serviceProcessInstaller1
             // 
+            this.serviceProcessInstaller1.Account = System.ServiceProcess.ServiceAccount.LocalSystem;
             this.serviceProcessInstaller1.Password = null;
             this.serviceProcessInstaller1.Username = null;
             // 
             // serviceInstaller1
             // 
-            this.serviceInstaller1.ServiceName = "SamaSMSService";
             this.serviceInstaller1.Description = "Sama SMS Sender Service";
             this.serviceInstaller1.DisplayName = "SamaSMS";
+            this.serviceInstaller1.ServiceName = "SamaSMSService";
             // 
             // ProjectInstaller
             // 
@@ -57,6 +57,6 @@ namespace SamaService
         #endregion
 
         private System.ServiceProcess.ServiceProcessInstaller serviceProcessInstaller1;
-        private System.ServiceProcess.ServiceInstaller serviceInstaller1;
+        private ServiceInstaller serviceInstaller1;
     }
 }

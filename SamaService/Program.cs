@@ -1,4 +1,9 @@
 ﻿using System.ServiceProcess;
+using StructureMap;
+using DM;
+using System;
+using DM.Services;
+using System.Threading;
 
 namespace SamaService
 {
@@ -11,11 +16,12 @@ namespace SamaService
         {
             ServiceBase[] ServicesToRun;
             ServicesToRun = new ServiceBase[]
-            {
-                new SamaService2()
-            };
-            PublicClass.Send10000 = PublicClass.Send1200 = PublicClass.Send5000 = false;
+                {
+                   new SamaService2()
+                };
             ServiceBase.Run(ServicesToRun);
+
         }
+
     }
 }
