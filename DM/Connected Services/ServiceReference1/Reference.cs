@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SamaService.ServiceReference1 {
+namespace DM.ServiceReference1 {
     
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -89,11 +89,11 @@ namespace SamaService.ServiceReference1 {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(object2))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(object1))]
         [return: System.ServiceModel.MessageParameterAttribute(Name="GetDeliverySoundResponse")]
-        SamaService.ServiceReference1.object1[] GetDeliverySound(string username, string password, string phones, int idsendsound);
+        DM.ServiceReference1.object1[] GetDeliverySound(string username, string password, string phones, int idsendsound);
         
         [System.ServiceModel.OperationContractAttribute(Action="", ReplyAction="*")]
         [return: System.ServiceModel.MessageParameterAttribute(Name="GetDeliverySoundResponse")]
-        System.Threading.Tasks.Task<SamaService.ServiceReference1.object1[]> GetDeliverySoundAsync(string username, string password, string phones, int idsendsound);
+        System.Threading.Tasks.Task<DM.ServiceReference1.object1[]> GetDeliverySoundAsync(string username, string password, string phones, int idsendsound);
         
         [System.ServiceModel.OperationContractAttribute(Action="", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
@@ -102,11 +102,11 @@ namespace SamaService.ServiceReference1 {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(object2))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(object1))]
         [return: System.ServiceModel.MessageParameterAttribute(Name="GetDeliverySmsGroupResponse")]
-        SamaService.ServiceReference1.object2[] GetDeliverySmsGroup(string username, string password, string phones, int idsendsms);
+        DM.ServiceReference1.object2[] GetDeliverySmsGroup(string username, string password, string phones, int idsendsms);
         
         [System.ServiceModel.OperationContractAttribute(Action="", ReplyAction="*")]
         [return: System.ServiceModel.MessageParameterAttribute(Name="GetDeliverySmsGroupResponse")]
-        System.Threading.Tasks.Task<SamaService.ServiceReference1.object2[]> GetDeliverySmsGroupAsync(string username, string password, string phones, int idsendsms);
+        System.Threading.Tasks.Task<DM.ServiceReference1.object2[]> GetDeliverySmsGroupAsync(string username, string password, string phones, int idsendsms);
         
         [System.ServiceModel.OperationContractAttribute(Action="", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
@@ -115,11 +115,11 @@ namespace SamaService.ServiceReference1 {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(object2))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(object1))]
         [return: System.ServiceModel.MessageParameterAttribute(Name="GetSmsReceivedResponse")]
-        SamaService.ServiceReference1.object3[] GetSmsReceived(string username, string password);
+        DM.ServiceReference1.object3[] GetSmsReceived(string username, string password);
         
         [System.ServiceModel.OperationContractAttribute(Action="", ReplyAction="*")]
         [return: System.ServiceModel.MessageParameterAttribute(Name="GetSmsReceivedResponse")]
-        System.Threading.Tasks.Task<SamaService.ServiceReference1.object3[]> GetSmsReceivedAsync(string username, string password);
+        System.Threading.Tasks.Task<DM.ServiceReference1.object3[]> GetSmsReceivedAsync(string username, string password);
         
         [System.ServiceModel.OperationContractAttribute(Action="", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
@@ -128,11 +128,11 @@ namespace SamaService.ServiceReference1 {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(object2))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(object1))]
         [return: System.ServiceModel.MessageParameterAttribute(Name="GetSmsReceivedIdResponse")]
-        SamaService.ServiceReference1.object3[] GetSmsReceivedId(string username, string password, int id);
+        DM.ServiceReference1.object3[] GetSmsReceivedId(string username, string password, int id);
         
         [System.ServiceModel.OperationContractAttribute(Action="", ReplyAction="*")]
         [return: System.ServiceModel.MessageParameterAttribute(Name="GetSmsReceivedIdResponse")]
-        System.Threading.Tasks.Task<SamaService.ServiceReference1.object3[]> GetSmsReceivedIdAsync(string username, string password, int id);
+        System.Threading.Tasks.Task<DM.ServiceReference1.object3[]> GetSmsReceivedIdAsync(string username, string password, int id);
         
         [System.ServiceModel.OperationContractAttribute(Action="", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(Style=System.ServiceModel.OperationFormatStyle.Rpc, SupportFaults=true, Use=System.ServiceModel.OperationFormatUse.Encoded)]
@@ -154,11 +154,11 @@ namespace SamaService.ServiceReference1 {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(object2))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(object1))]
         [return: System.ServiceModel.MessageParameterAttribute(Name="UserInfoResponse")]
-        SamaService.ServiceReference1.objectInfo[] UserInfo(string username, string password);
+        DM.ServiceReference1.objectInfo[] UserInfo(string username, string password);
         
         [System.ServiceModel.OperationContractAttribute(Action="", ReplyAction="*")]
         [return: System.ServiceModel.MessageParameterAttribute(Name="UserInfoResponse")]
-        System.Threading.Tasks.Task<SamaService.ServiceReference1.objectInfo[]> UserInfoAsync(string username, string password);
+        System.Threading.Tasks.Task<DM.ServiceReference1.objectInfo[]> UserInfoAsync(string username, string password);
     }
     
     /// <remarks/>
@@ -514,12 +514,12 @@ namespace SamaService.ServiceReference1 {
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public interface tsmsServiceChannel : SamaService.ServiceReference1.tsmsService, System.ServiceModel.IClientChannel {
+    public interface tsmsServiceChannel : DM.ServiceReference1.tsmsService, System.ServiceModel.IClientChannel {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class tsmsServiceClient : System.ServiceModel.ClientBase<SamaService.ServiceReference1.tsmsService>, SamaService.ServiceReference1.tsmsService {
+    public partial class tsmsServiceClient : System.ServiceModel.ClientBase<DM.ServiceReference1.tsmsService>, DM.ServiceReference1.tsmsService {
         
         public tsmsServiceClient() {
         }
@@ -612,35 +612,35 @@ namespace SamaService.ServiceReference1 {
             return base.Channel.uploadAsync(username, password, title, binaryfile);
         }
         
-        public SamaService.ServiceReference1.object1[] GetDeliverySound(string username, string password, string phones, int idsendsound) {
+        public DM.ServiceReference1.object1[] GetDeliverySound(string username, string password, string phones, int idsendsound) {
             return base.Channel.GetDeliverySound(username, password, phones, idsendsound);
         }
         
-        public System.Threading.Tasks.Task<SamaService.ServiceReference1.object1[]> GetDeliverySoundAsync(string username, string password, string phones, int idsendsound) {
+        public System.Threading.Tasks.Task<DM.ServiceReference1.object1[]> GetDeliverySoundAsync(string username, string password, string phones, int idsendsound) {
             return base.Channel.GetDeliverySoundAsync(username, password, phones, idsendsound);
         }
         
-        public SamaService.ServiceReference1.object2[] GetDeliverySmsGroup(string username, string password, string phones, int idsendsms) {
+        public DM.ServiceReference1.object2[] GetDeliverySmsGroup(string username, string password, string phones, int idsendsms) {
             return base.Channel.GetDeliverySmsGroup(username, password, phones, idsendsms);
         }
         
-        public System.Threading.Tasks.Task<SamaService.ServiceReference1.object2[]> GetDeliverySmsGroupAsync(string username, string password, string phones, int idsendsms) {
+        public System.Threading.Tasks.Task<DM.ServiceReference1.object2[]> GetDeliverySmsGroupAsync(string username, string password, string phones, int idsendsms) {
             return base.Channel.GetDeliverySmsGroupAsync(username, password, phones, idsendsms);
         }
         
-        public SamaService.ServiceReference1.object3[] GetSmsReceived(string username, string password) {
+        public DM.ServiceReference1.object3[] GetSmsReceived(string username, string password) {
             return base.Channel.GetSmsReceived(username, password);
         }
         
-        public System.Threading.Tasks.Task<SamaService.ServiceReference1.object3[]> GetSmsReceivedAsync(string username, string password) {
+        public System.Threading.Tasks.Task<DM.ServiceReference1.object3[]> GetSmsReceivedAsync(string username, string password) {
             return base.Channel.GetSmsReceivedAsync(username, password);
         }
         
-        public SamaService.ServiceReference1.object3[] GetSmsReceivedId(string username, string password, int id) {
+        public DM.ServiceReference1.object3[] GetSmsReceivedId(string username, string password, int id) {
             return base.Channel.GetSmsReceivedId(username, password, id);
         }
         
-        public System.Threading.Tasks.Task<SamaService.ServiceReference1.object3[]> GetSmsReceivedIdAsync(string username, string password, int id) {
+        public System.Threading.Tasks.Task<DM.ServiceReference1.object3[]> GetSmsReceivedIdAsync(string username, string password, int id) {
             return base.Channel.GetSmsReceivedIdAsync(username, password, id);
         }
         
@@ -652,11 +652,11 @@ namespace SamaService.ServiceReference1 {
             return base.Channel.sendSoundOfPatternAsync(username, password, phone, title, patternid, patternVariables, tryCount, MinuteBetweenTry, messageid);
         }
         
-        public SamaService.ServiceReference1.objectInfo[] UserInfo(string username, string password) {
+        public DM.ServiceReference1.objectInfo[] UserInfo(string username, string password) {
             return base.Channel.UserInfo(username, password);
         }
         
-        public System.Threading.Tasks.Task<SamaService.ServiceReference1.objectInfo[]> UserInfoAsync(string username, string password) {
+        public System.Threading.Tasks.Task<DM.ServiceReference1.objectInfo[]> UserInfoAsync(string username, string password) {
             return base.Channel.UserInfoAsync(username, password);
         }
     }

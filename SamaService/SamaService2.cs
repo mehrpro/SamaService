@@ -3,6 +3,7 @@ using System.ServiceProcess;
 using System.Timers;
 using DM.Infrastructure;
 using StructureMap;
+using DM.Services;
 
 
 namespace SamaService
@@ -47,12 +48,19 @@ namespace SamaService
 
         private void timer5_Tick(object sender, ElapsedEventArgs e)
         {
+            Logger.WriteMessageLog("Timer1");
             sendserv = container.GetInstance<SMSSenderProcess>();
+            Logger.WriteMessageLog("Timer2");
             dataTrans = container.GetInstance<DatabaseTransFormerProcess>();
+            Logger.WriteMessageLog("Timer3");
             dataTrans.TransformDataBase();
+            Logger.WriteMessageLog("Timer4");
             sendserv.UpdateTagID();
+            Logger.WriteMessageLog("Timer5");
             sendserv.NewTags();
+            Logger.WriteMessageLog("Timer6");
             sendserv.SMSSender();
+            Logger.WriteMessageLog("Timer7");
             if (DateTime.Now.Hour > 16 && !_sendBrith)
             {
                 _sendBrith = true;

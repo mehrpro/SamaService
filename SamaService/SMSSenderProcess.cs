@@ -5,7 +5,7 @@ using DM.DTO;
 using DM.Infrastructure;
 using DM.Services;
 using DM.Models;
-using SamaService.ServiceReference1;
+//using SamaService.ServiceReference1;
 namespace SamaService
 {
     public class SMSSenderProcess
@@ -17,6 +17,7 @@ namespace SamaService
         private readonly ITagRecorderRepository _tagRecorderRepository;
         private readonly IBirthRegisterRepository _birthRegisterRepository;
         private readonly ISenderRepository _senderRepository;
+        private readonly ILoggerRepository _loggerRepository;
         //public StructureMap.Container SendContainer { get; set; }
         public SMSSenderProcess(
             IUnitOfWork unitOfWork,
@@ -25,7 +26,8 @@ namespace SamaService
             IStudentTagRepository studentTagRepository,
             ITagRecorderRepository tagRecorderRepository,
             IBirthRegisterRepository birthRegisterRepository,
-            ISenderRepository senderRepository)
+            ISenderRepository senderRepository
+            , ILoggerRepository loggerRepository)
         {
             _unitOfWork = unitOfWork;
             _studentRepository = studentRepository;
@@ -34,6 +36,7 @@ namespace SamaService
             _tagRecorderRepository = tagRecorderRepository;
             _birthRegisterRepository = birthRegisterRepository;
             _senderRepository = senderRepository;
+            _loggerRepository = loggerRepository;
         }
 
         #region NewTags
@@ -45,6 +48,7 @@ namespace SamaService
 
             try
             {
+                _loggerRepository.WriteMessageLog("NewTag");
                 var qry = _tagRecorderRepository.GetAllByCondition(x => x.Enables && x.SMS == false);
 
                 var qryAfterRemoveDublicate = qry.Select(x => x.TagID).ToList().RemoveDuplicates();
@@ -61,13 +65,13 @@ namespace SamaService
                         };
                         _tagRepository.Insert(newTag);
                         _unitOfWork.SaveChanges();
-                        Logger.WriteMessageLog($"Save New TAG : {item} ViewLabel {HexToDecimal(item)}");
+                        _loggerRepository.WriteMessageLog($"Save New TAG : {item} ViewLabel {HexToDecimal(item)}");
                     }
                 }
             }
             catch (Exception e)
             {
-                Logger.WriteErrorLog(e, "NewTags");
+                _loggerRepository.WriteErrorLog(e, "NewTags");
             }
 
 
@@ -77,6 +81,7 @@ namespace SamaService
 
         private string HexToDecimal(string tagHex)
         {
+            _loggerRepository.WriteMessageLog("HexToDecimal");
             var hexValue = tagHex.Remove(0, 2).Remove(8);
             int decValue = int.Parse(hexValue, System.Globalization.NumberStyles.HexNumber);
             var str = decValue.ToString("0000000000");
@@ -91,7 +96,7 @@ namespace SamaService
         /// </summary>
         public void UpdateTagID()
         {
-
+            _loggerRepository.WriteMessageLog("UpdateTagID");
             var listRemove = new List<TagRecorder>();
             try
             {
@@ -113,19 +118,20 @@ namespace SamaService
             }
             catch (Exception e)
             {
-                Logger.WriteErrorLog(e, "UpdateTagID");
+                _loggerRepository.WriteErrorLog(e, "UpdateTagID");
 
             }
             finally
             {
                 try
                 {
+                    _loggerRepository.WriteMessageLog("Finally");
                     _tagRecorderRepository.DeleteRange(listRemove);
                     _unitOfWork.SaveChanges();
                 }
                 catch (Exception e)
                 {
-                    Logger.WriteErrorLog(e, "UpdateTagID Finally");
+                    _loggerRepository.WriteErrorLog(e, "UpdateTagID Finally");
                 }
             }
         }
@@ -139,9 +145,10 @@ namespace SamaService
         /// </summary>
         public void SMSSender()
         {
-
+            _loggerRepository.WriteMessageLog("SMSSender");
             //تمام ثبت های امروز
             var qryDayRecorder = _tagRecorderRepository.GetAllByCondition(x => x.SMS == false && x.Enables && x.StudentID_FK > 0 && x.TagID_FK > 0); // تمام ثبت های امروز
+            _loggerRepository.WriteMessageLog("Sender1");
             foreach (var item in qryDayRecorder) // جدول بندی تردد ها بر اساس هر تگ که در عین حال فقط و فقط متعلق به یک دانش آموز است
             {
                 var student = _studentRepository.GetById(Convert.ToInt32(item.StudentID_FK));
@@ -165,6 +172,7 @@ namespace SamaService
                         else
                             _senderRepository.SendInput(Convert.ToInt64(student.SMS), student.FullName,
                                 item.DateTimeRegister.Convert_PersianCalender(), item.ID); //ارسال
+                        _loggerRepository.WriteMessageLog("Sender2");
                     }
                     else
                     {
@@ -188,7 +196,7 @@ namespace SamaService
                 }
                 catch (Exception e)
                 {
-                    Logger.WriteErrorLog(e, "خطا در پردازش و ارسال پیامک تردد");
+                    _loggerRepository.WriteErrorLog(e, "خطا در پردازش و ارسال پیامک تردد");
                 }
             }
 
@@ -221,7 +229,7 @@ namespace SamaService
             }
             catch (Exception e)
             {
-                Logger.WriteErrorLog(e, "خطا در ثبت تبریک تولد");
+                _loggerRepository.WriteErrorLog(e, "خطا در ثبت تبریک تولد");
             }
         }
 

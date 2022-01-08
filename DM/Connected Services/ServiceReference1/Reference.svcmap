@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="68ec6296-0d23-4d42-927b-08e626db070a" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="21cbabd8-5e5c-41eb-a964-d45707e75308" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
   <ClientOptions>
     <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
     <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
@@ -22,7 +22,7 @@
     <MetadataSource Address="http://www.tsms.ir/soapWSDL/?wsdl" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="SMSService.wsdl" MetadataType="Wsdl" ID="1dae9ed3-ffd5-425a-b748-7d414bbee770" SourceId="1" SourceUrl="http://www.tsms.ir/soapWSDL/?wsdl" />
+    <MetadataFile FileName="SMSService.wsdl" MetadataType="Wsdl" ID="12d19b4d-1571-4aa3-a498-0ed864123f84" SourceId="1" SourceUrl="http://www.tsms.ir/soapWSDL/?wsdl" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

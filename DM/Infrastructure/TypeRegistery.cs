@@ -2,7 +2,6 @@
 using DM.Models;
 using DM.Services;
 using StructureMap;
-using TSMSLIB_TLB;
 namespace DM.Infrastructure
 {
     public class TypeRegistery : Registry

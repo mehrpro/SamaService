@@ -12,12 +12,14 @@ namespace SamaService
         private readonly IUnitOfWork _unitOfWork;
         private readonly ITagRecorderRepository _tagRecorderRepository;
         private readonly IMySqlServiceRepository _mySqlServiceRepository;
+        private readonly ILoggerRepository _loggerRepository;
 
-        public DatabaseTransFormerProcess(IUnitOfWork unitOfWork, ITagRecorderRepository tagRecorderRepository, IMySqlServiceRepository mySqlServiceRepository)
+        public DatabaseTransFormerProcess(IUnitOfWork unitOfWork, ILoggerRepository loggerRepository, ITagRecorderRepository tagRecorderRepository, IMySqlServiceRepository mySqlServiceRepository)
         {
             _unitOfWork = unitOfWork;
             _tagRecorderRepository = tagRecorderRepository;
             _mySqlServiceRepository = mySqlServiceRepository;
+            _loggerRepository = loggerRepository;
         }
         /// <summary>
         /// پردازش و انتقال بین دو سرور و ثبت و امحای تردد های ثبت شده
@@ -47,13 +49,13 @@ namespace SamaService
                 else
                 {
                     _mySqlServiceRepository.rollbackTagRecordList(listForDisableinMySql.Select(x => x.ID).ToList());
-                    Logger.WriteMessageLog("Error TransformDataBase");
+                    _loggerRepository.WriteMessageLog("Error TransformDataBase");
                 }
 
             }
             catch (Exception e)
             {
-                Logger.WriteErrorLog(e, "TransformDataBase");
+                _loggerRepository.WriteErrorLog(e, "TransformDataBase");
 
             }
         }
