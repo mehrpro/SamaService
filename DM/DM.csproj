@@ -74,7 +74,6 @@
     </Compile>
     <Compile Include="DTO\TagDTO.cs" />
     <Compile Include="DTO\TagListDTO.cs" />
-    <Compile Include="DTO\TagRecorderDTO.cs" />
     <Compile Include="Infrastructure\AutoMapping.cs" />
     <Compile Include="Infrastructure\IUnitOfWork.cs" />
     <Compile Include="Infrastructure\TypeRegistery.cs" />
@@ -99,7 +98,7 @@
     <Compile Include="Public_Class.cs" />
     <Compile Include="Services\IBirthRegisterRepository.cs" />
     <Compile Include="Services\ILoggerRepository.cs" />
-    <Compile Include="Services\IMySqlServiceRepository.cs" />
+    <Compile Include="Services\MySqlServiceRepository.cs" />
     <Compile Include="Services\ISenderRepository.cs" />
     <Compile Include="Services\IStudentRepository.cs" />
     <Compile Include="Services\IStudentTagRepository.cs" />

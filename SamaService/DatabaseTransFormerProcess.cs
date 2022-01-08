@@ -11,14 +11,16 @@ namespace SamaService
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly ITagRecorderRepository _tagRecorderRepository;
-        private readonly IMySqlServiceRepository _mySqlServiceRepository;
+        //private readonly MySqlServiceRepository _mySqlServiceRepository;
         private readonly ILoggerRepository _loggerRepository;
 
-        public DatabaseTransFormerProcess(IUnitOfWork unitOfWork, ILoggerRepository loggerRepository, ITagRecorderRepository tagRecorderRepository, IMySqlServiceRepository mySqlServiceRepository)
+        public DatabaseTransFormerProcess(IUnitOfWork unitOfWork,
+                                          ILoggerRepository loggerRepository,
+                                          ITagRecorderRepository tagRecorderRepository)
         {
             _unitOfWork = unitOfWork;
             _tagRecorderRepository = tagRecorderRepository;
-            _mySqlServiceRepository = mySqlServiceRepository;
+            //_mySqlServiceRepository = MySqlServiceRepository;
             _loggerRepository = loggerRepository;
         }
         /// <summary>
@@ -28,7 +30,7 @@ namespace SamaService
         {
             try
             {
-                var listForDisableinMySql = _mySqlServiceRepository.ReaderSQL();// لیست تگ های ثبت نشده
+                var listForDisableinMySql = MySqlServiceRepository.ReaderSQL();// لیست تگ های ثبت نشده
                 foreach (var tagList in listForDisableinMySql)// ثبت در بانک اطلاعاتی اس کیوال
                 {
                     _tagRecorderRepository.Insert(new TagRecorder()
@@ -41,14 +43,14 @@ namespace SamaService
                         Enables = true,
                     });
                 }
-                var resultMysql = _mySqlServiceRepository.UpdateTagRecordList(listForDisableinMySql.Select(x => x.ID).ToList());
+                var resultMysql = MySqlServiceRepository.UpdateTagRecordList(listForDisableinMySql.Select(x => x.ID).ToList());
                 if (!resultMysql)
                 {
                     _unitOfWork.SaveChanges();
                 }
                 else
                 {
-                    _mySqlServiceRepository.rollbackTagRecordList(listForDisableinMySql.Select(x => x.ID).ToList());
+                    MySqlServiceRepository.RollbackTagRecordList(listForDisableinMySql.Select(x => x.ID).ToList());
                     _loggerRepository.WriteMessageLog("Error TransformDataBase");
                 }
 

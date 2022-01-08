@@ -20,9 +20,6 @@ namespace SamaService
         {
             InitializeComponent();
 
-            container = new Container(new TypeRegistery());
-
-
         }
 
         protected override void OnStart(string[] args)
@@ -35,8 +32,14 @@ namespace SamaService
                 _timer5.Interval = 3000; // every 5 Secs
                 _timer5.Elapsed += new ElapsedEventHandler(this.timer5_Tick);
                 _timer5.Enabled = true;
-                Logger.WriteMessageLog(" Start Service");
-                Logger.WriteMessageLog(" Start SMS Service");
+                container = new Container(new TypeRegistery());
+                Logger.WriteMessageLog(" Start Service ");
+                Logger.WriteMessageLog(" Start SMS Service ");
+
+                Logger.WriteMessageLog("Timer2");
+                dataTrans = container.GetInstance<DatabaseTransFormerProcess>();
+                Logger.WriteMessageLog("Timer1");
+                sendserv = container.GetInstance<SMSSenderProcess>();
             }
             catch
             {
@@ -48,10 +51,8 @@ namespace SamaService
 
         private void timer5_Tick(object sender, ElapsedEventArgs e)
         {
-            Logger.WriteMessageLog("Timer1");
-            sendserv = container.GetInstance<SMSSenderProcess>();
-            Logger.WriteMessageLog("Timer2");
-            dataTrans = container.GetInstance<DatabaseTransFormerProcess>();
+
+
             Logger.WriteMessageLog("Timer3");
             dataTrans.TransformDataBase();
             Logger.WriteMessageLog("Timer4");

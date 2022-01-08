@@ -22,7 +22,6 @@ namespace DM.Services
         private readonly IUnitOfWork _unitOfWork;
         private readonly ILoggerRepository _loggerRepository;
         private readonly IDbSet<TagRecorder> _tagRecorders;
-        private readonly IDbSet<Student> _student;
         private readonly IDbSet<BirthRegister> _birthRegisters;
         //private TSMS_Tooba _tooba;
 
@@ -31,7 +30,6 @@ namespace DM.Services
             _unitOfWork = unitOfWork;
             _loggerRepository = loggerRepository;
             _tagRecorders = _unitOfWork.Set<TagRecorder>();
-            _student = _unitOfWork.Set<Student>();
             _birthRegisters = _unitOfWork.Set<BirthRegister>();
             //_tooba = new TSMS_Tooba();
         }
@@ -76,11 +74,11 @@ namespace DM.Services
 
                 if (result[0] > 0)
                 {
-                    
-                        _birthRegisters.Add(new BirthRegister() { StudentID_FK = id, Registered = DateTime.Today });
-                        _unitOfWork.SaveChanges();
-                        _loggerRepository.WriteMessageSenderLog( $"Send BirthDay {mobile} - {result[0]}");
-                    
+
+                    _birthRegisters.Add(new BirthRegister() { StudentID_FK = id, Registered = DateTime.Today });
+                    _unitOfWork.SaveChanges();
+                    _loggerRepository.WriteMessageSenderLog($"Send BirthDay {mobile} - {result[0]}");
+
                 }
             }
             catch (Exception e)

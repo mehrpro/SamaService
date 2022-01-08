@@ -19,10 +19,10 @@ namespace DM.Models
             return base.Set<TEntity>();
         }
 
-        public new void SaveChanges()
-        {
-            base.SaveChanges();
-        }
+        //public new void SaveChanges()
+        //{
+        //    base.SaveChanges();
+        //}
 
         #endregion
 

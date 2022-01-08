@@ -14,9 +14,10 @@ namespace DM.Infrastructure
             For<ITagRepository>().Use<TagRepository>();
             For<ITagRecorderRepository>().Use<TagRecorderRepository>();
             For<IBirthRegisterRepository>().Use<BirthRegisterRepository>();
-            For<IMySqlServiceRepository>().Use<MySqlServiceRepository>();
+            //For<IMySqlServiceRepository>().Use<MySqlServiceRepository>();
             For<ILoggerRepository>().Use<LoggerRepository>();
             For<ISenderRepository>().Use<SenderRepository>();
+
             var mapperConfiguration = new MapperConfiguration(cfg =>
             {
                 cfg.AddProfile(typeof(AutoMapping));

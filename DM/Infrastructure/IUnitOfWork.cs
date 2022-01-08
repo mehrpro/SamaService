@@ -5,6 +5,6 @@ namespace DM.Infrastructure
     public interface IUnitOfWork
     {
         IDbSet<TEntity> Set<TEntity>() where TEntity : class;
-        void SaveChanges();
+        int SaveChanges();
     }
 }

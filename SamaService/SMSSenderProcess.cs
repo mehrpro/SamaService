@@ -19,8 +19,7 @@ namespace SamaService
         private readonly ISenderRepository _senderRepository;
         private readonly ILoggerRepository _loggerRepository;
         //public StructureMap.Container SendContainer { get; set; }
-        public SMSSenderProcess(
-            IUnitOfWork unitOfWork,
+        public SMSSenderProcess(IUnitOfWork unitOfWork,
             IStudentRepository studentRepository,
             ITagRepository tagRepository,
             IStudentTagRepository studentTagRepository,

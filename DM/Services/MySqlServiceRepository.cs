@@ -5,29 +5,28 @@ using MySql.Data.MySqlClient;
 
 namespace DM.Services
 {
-    public interface IMySqlServiceRepository
+    //public interface IMySqlServiceRepository
+    //{
+    //     bool UpdateTagRecord(int id);
+    //     List<TagListDTO> ReaderSQL();
+    //     bool UpdateTagRecordList(List<int> listDisabel);
+    //     bool RollbackTagRecordList(List<int> listDisabel);
+
+    //}
+
+    public static class MySqlServiceRepository
     {
-        bool UpdateTagRecord(int id);
-        List<TagListDTO> ReaderSQL();
-        bool UpdateTagRecordList(List<int> listDisabel);
-        bool rollbackTagRecordList(List<int> listDisabel);
+        //private MySqlConnection _mySqlConnection;
+        private const string strConnMySql = @"server=localhost;port=3306;userid=ard;password=Ss987654;database=schooldb;SSL Mode = None";
 
-    }
 
-    public class MySqlServiceRepository : IMySqlServiceRepository
-    {
-        private MySqlConnection _mySqlConnection;
 
-        public MySqlServiceRepository()
+        public static bool UpdateTagRecord(int id)
         {
-            var strConnMySql = @"server=localhost;port=3306;userid=ard;password=Ss987654;database=schooldb;SSL Mode = None";
-            _mySqlConnection = new MySqlConnection(strConnMySql);
-        }
-        public bool UpdateTagRecord(int id)
-        {
-
+            var _mySqlConnection = new MySqlConnection(strConnMySql);
             try
             {
+
                 _mySqlConnection.Open();
                 var cmdString = $"update  schooldb.tagrecive set Registered = '0' where ID = '{id}' ;";
                 var cmd = new MySqlCommand(cmdString, _mySqlConnection);
@@ -44,12 +43,13 @@ namespace DM.Services
 
         }
 
-        public List<TagListDTO> ReaderSQL()
+        public static List<TagListDTO> ReaderSQL()
         {
             var list = new List<TagListDTO>();
-
+            var _mySqlConnection = new MySqlConnection(strConnMySql);
             try
             {
+
                 _mySqlConnection.Open();
                 var cmdString = "SELECT * FROM schooldb.tagrecive where Registered = '1'";
                 var cmd = new MySqlCommand(cmdString, _mySqlConnection);
@@ -77,8 +77,9 @@ namespace DM.Services
 
         }
 
-        public bool UpdateTagRecordList(List<int> listDisabel)
+        public static bool UpdateTagRecordList(List<int> listDisabel)
         {
+            var _mySqlConnection = new MySqlConnection(strConnMySql);
 
             try
             {
@@ -101,9 +102,9 @@ namespace DM.Services
 
         }
 
-        public bool rollbackTagRecordList(List<int> listDisabel)
+        public static bool RollbackTagRecordList(List<int> listDisabel)
         {
-
+            var _mySqlConnection = new MySqlConnection(strConnMySql);
             try
             {
                 _mySqlConnection.Open();
