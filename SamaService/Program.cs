@@ -1,8 +1,8 @@
 ﻿using System.ServiceProcess;
 using StructureMap;
-using DM;
+using SamaService;
 using System;
-using DM.Services;
+using SamaService.Services;
 using System.Threading;
 
 namespace SamaService

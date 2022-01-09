@@ -1,9 +1,8 @@
 ﻿using System;
 using System.ServiceProcess;
 using System.Timers;
-using DM.Infrastructure;
+using SamaService.Infrastructure;
 using StructureMap;
-using DM.Services;
 
 
 namespace SamaService
@@ -11,9 +10,8 @@ namespace SamaService
     public partial class SamaService2 : ServiceBase
     {
 
-        private SMSSenderProcess sendserv;
-        private DatabaseTransFormerProcess dataTrans;
-        private StructureMap.Container container;
+
+        private Container _container;
         private Timer _timer5;
         private bool _sendBrith;
         public SamaService2()
@@ -25,21 +23,16 @@ namespace SamaService
         protected override void OnStart(string[] args)
         {
 
-            DM.Public_Class.Send10000 = DM.Public_Class.Send1200 = DM.Public_Class.Send5000 = false;
+            PublicStaticClass.Send10000 = PublicStaticClass.Send1200 = PublicStaticClass.Send5000 = false;
             try
             {
                 _timer5 = new Timer();
                 _timer5.Interval = 3000; // every 5 Secs
                 _timer5.Elapsed += new ElapsedEventHandler(this.timer5_Tick);
                 _timer5.Enabled = true;
-                container = new Container(new TypeRegistery());
+                _container = new Container(new SamaService.Infrastructure.TypeRegistery());
                 Logger.WriteMessageLog(" Start Service ");
                 Logger.WriteMessageLog(" Start SMS Service ");
-
-                Logger.WriteMessageLog("Timer2");
-                dataTrans = container.GetInstance<DatabaseTransFormerProcess>();
-                Logger.WriteMessageLog("Timer1");
-                sendserv = container.GetInstance<SMSSenderProcess>();
             }
             catch
             {
@@ -53,12 +46,25 @@ namespace SamaService
         {
 
 
+            var newtsg = _container.GetInstance<Process.NewTags>();
+            newtsg.Run();
+            Logger.WriteMessageLog("NewTag");
+
+            var updateid = _container.GetInstance<Process.UpdateTagID>();
+            updateid.Run();
+            Logger.WriteMessageLog("UpdateTagID");
+
+
+            Logger.WriteMessageLog("CreateSMSSender");
+            var sendserv = _container.GetInstance<SMSSenderProcess>();
+
+
+            // Logger.WriteMessageLog("Timer2");
+            var dataTrans = _container.GetInstance<DatabaseTransFormerProcess>();
             Logger.WriteMessageLog("Timer3");
             dataTrans.TransformDataBase();
-            Logger.WriteMessageLog("Timer4");
-            sendserv.UpdateTagID();
-            Logger.WriteMessageLog("Timer5");
-            sendserv.NewTags();
+
+
             Logger.WriteMessageLog("Timer6");
             sendserv.SMSSender();
             Logger.WriteMessageLog("Timer7");

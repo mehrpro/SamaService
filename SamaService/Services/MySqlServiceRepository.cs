@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using DM.DTO;
+using SamaService.DTO;
 using MySql.Data.MySqlClient;
 
-namespace DM.Services
+namespace SamaService.Services
 {
     //public interface IMySqlServiceRepository
     //{
@@ -22,10 +22,9 @@ namespace DM.Services
 
         public static bool UpdateTagRecord(int id)
         {
-            var _mySqlConnection = new MySqlConnection(Public_Class.strConnMySql);
+            var _mySqlConnection = new MySqlConnection(PublicStaticClass.strConnMySql);
             try
             {
-
                 _mySqlConnection.Open();
                 var cmdString = $"update  schooldb.tagrecive set Registered = '0' where ID = '{id}' ;";
                 var cmd = new MySqlCommand(cmdString, _mySqlConnection);
@@ -45,7 +44,7 @@ namespace DM.Services
         public static List<TagListDTO> ReaderSQL()
         {
             var list = new List<TagListDTO>();
-            var _mySqlConnection = new MySqlConnection(Public_Class.strConnMySql);
+            var _mySqlConnection = new MySqlConnection(PublicStaticClass.strConnMySql);
             try
             {
 
@@ -78,7 +77,7 @@ namespace DM.Services
 
         public static bool UpdateTagRecordList(List<int> listDisabel)
         {
-            var _mySqlConnection = new MySqlConnection(Public_Class.strConnMySql);
+            var _mySqlConnection = new MySqlConnection(PublicStaticClass.strConnMySql);
 
             try
             {
@@ -103,7 +102,7 @@ namespace DM.Services
 
         public static bool RollbackTagRecordList(List<int> listDisabel)
         {
-            var _mySqlConnection = new MySqlConnection(Public_Class.strConnMySql);
+            var _mySqlConnection = new MySqlConnection(PublicStaticClass.strConnMySql);
             try
             {
                 _mySqlConnection.Open();

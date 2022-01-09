@@ -2,12 +2,10 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace DM
+namespace SamaService
 {
-    public static class Public_Class
+    public static class PublicStaticClass
     {
         public static bool Send10000 { get; set; }
         public static bool Send5000 { get; set; }
@@ -24,7 +22,6 @@ namespace DM
                 : lower < num && num < upper;
         }
 
-        public static int LastCredit { get; set; }
         public static string Convert_PersianCalender(this DateTime dt)
         {
             var pc = new PersianCalendar();

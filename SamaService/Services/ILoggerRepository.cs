@@ -1,22 +1,28 @@
 ﻿using System;
 using System.IO;
 
-namespace SamaService
+namespace SamaService.Services
 {
-    public static class Logger
+    public interface ILoggerRepository
     {
-        /// <summary>
-        /// ثبت خطاهای سرویس
-        /// </summary>
-        /// <param name="ex">خطا</param>
-        public static void WriteErrorLog(Exception ex, string partName)
+        void WriteErrorLog(Exception ex, string partName);
+        void WriteMessageLog(string message);
+        void WriteErrorSaveToDatabase(string message);
+        void WriteMessageSenderLog(string message);
+    }
+
+    public class LoggerRepository : ILoggerRepository
+    {
+
+
+        public void WriteErrorLog(Exception ex, string partName)
         {
             StreamWriter sw = null;
             try
             {
                 sw = new StreamWriter(AppDomain.CurrentDomain.BaseDirectory + "\\LogFile.txt", true);
                 sw.WriteLine(partName + ": " + DateTime.Now + ": " + ex.Source.Trim() + "; " +
-                                       ex.Message.Trim());
+                             ex.Message.Trim());
                 sw.Flush();
                 sw.Close();
             }
@@ -25,11 +31,8 @@ namespace SamaService
                 // ignored
             }
         }
-        /// <summary>
-        /// ثبت پیام های سرویس
-        /// </summary>
-        /// <param name="message">پیام</param>
-        public static void WriteMessageLog(string message)
+
+        public void WriteMessageLog(string message)
         {
             StreamWriter sw = null;
             try
@@ -44,11 +47,8 @@ namespace SamaService
                 // igroned
             }
         }
-        /// <summary>
-        /// خطاهای عدم ذخیره در بانک اطلاعاتی
-        /// </summary>
-        /// <param name="message"></param>
-        public static void WriteErrorSaveToDatabase(string message)
+
+        public void WriteErrorSaveToDatabase(string message)
         {
             StreamWriter sw = null;
             try
@@ -61,9 +61,10 @@ namespace SamaService
             catch
             {
                 // igroned
-            }
+            };
         }
-        public static void WriteMessageSenderLog(string message)
+
+        public void WriteMessageSenderLog(string message)
         {
             StreamWriter sw = null;
             try

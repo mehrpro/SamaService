@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
-using DM.Infrastructure;
-using DM.Models;
-using DM.ServiceReference1;
+using SamaService.Infrastructure;
+using SamaService.Models;
+using SamaService.ServiceReference1;
 
-namespace DM.Services
+namespace SamaService.Services
 {
     public interface ISenderRepository
     {
@@ -43,30 +43,30 @@ namespace DM.Services
                 string[] vs = new[] { "09186620474" };
                 var resultUsernfo = _unitOfWorkClass.SMSClient.UserInfo("iaubijar", "M4228056");
                 //چک کردن اعتبار زیر 1200 تومن و توقف سرویس ارسال
-                if (resultUsernfo[0].credit < 12000 && !Public_Class.Send1200)
+                if (resultUsernfo[0].credit < 12000 && !PublicStaticClass.Send1200)
                 {
                     string[] creditMessage = { $"اعتبار سامانه پیامکی {resultUsernfo[0].credit} ریال می باشد سرویس متوقف گردید" };
                     var resultSend = _unitOfWorkClass.SMSClient.sendSms("iaubijar", "M4228056", from, vs, creditMessage, new string[] { }, "");
                     if (resultSend[0] > 0)
                     {
                         _loggerRepository.WriteMessageSenderLog($"Send Credit 1000 to PhoneNumber :  {vs} , {resultSend[0]}");
-                        Public_Class.Send1200 = true;
+                        PublicStaticClass.Send1200 = true;
                     }
                     return;
                 }
-                if (resultUsernfo[0].credit.Between(12001, 50000) && !Public_Class.Send5000)
+                if (resultUsernfo[0].credit.Between(12001, 50000) && !PublicStaticClass.Send5000)
                 {
                     string[] creditMessage = { $"اعتبار سامانه پیامکی {resultUsernfo[0].credit} ریال می باشد" };
                     var resultCredit = _unitOfWorkClass.SMSClient.sendSms("iaubijar", "M4228056", from, vs, creditMessage, new string[] { }, "");
                     if (resultCredit[0] > 0)
                     {
                         _loggerRepository.WriteMessageSenderLog($"Send Credit 5000 to PhoneNumber :  {vs}  , {resultCredit[0]}");
-                        Public_Class.Send5000 = true;
+                        PublicStaticClass.Send5000 = true;
                     }
                 }
                 if (resultUsernfo[0].credit > 50000)
                 {
-                    Public_Class.Send1200 = Public_Class.Send5000 = false;
+                    PublicStaticClass.Send1200 = PublicStaticClass.Send5000 = false;
                 }
                 string[] to = new[] { mobile.ToString("00000000000") };
                 string[] content = { $"{fullName} تولدت مبارک\r\n دبستان دخترانه سما بیجار" };
@@ -97,30 +97,30 @@ namespace DM.Services
                 string[] vs = new[] { "09186620474" };
                 var resultUsernfo = _unitOfWorkClass.SMSClient.UserInfo("iaubijar", "M4228056");
                 //چک کردن اعتبار زیر 1200 تومن و توقف سرویس ارسال
-                if (resultUsernfo[0].credit < 12000 && !Public_Class.Send1200)
+                if (resultUsernfo[0].credit < 12000 && !PublicStaticClass.Send1200)
                 {
                     string[] creditMessage = { $"اعتبار سامانه پیامکی {resultUsernfo[0].credit} ریال می باشد سرویس متوقف گردید" };
                     var resultSend = _unitOfWorkClass.SMSClient.sendSms("iaubijar", "M4228056", from, vs, creditMessage, new string[] { }, "");
                     if (resultSend[0] > 0)
                     {
                         _loggerRepository.WriteMessageSenderLog($"Send Credit 1000 to PhoneNumber :  {vs} , {resultSend[0]}");
-                        Public_Class.Send1200 = true;
+                        PublicStaticClass.Send1200 = true;
                     }
                     return;
                 }
-                if (resultUsernfo[0].credit.Between(12001, 50000) && !Public_Class.Send5000)
+                if (resultUsernfo[0].credit.Between(12001, 50000) && !PublicStaticClass.Send5000)
                 {
                     string[] creditMessage = { $"اعتبار سامانه پیامکی {resultUsernfo[0].credit} ریال می باشد" };
                     var resultCredit = _unitOfWorkClass.SMSClient.sendSms("iaubijar", "M4228056", from, vs, creditMessage, new string[] { }, "");
                     if (resultCredit[0] > 0)
                     {
                         _loggerRepository.WriteMessageSenderLog($"Send Credit 5000 to PhoneNumber :  {vs}  , {resultCredit[0]}");
-                        Public_Class.Send5000 = true;
+                        PublicStaticClass.Send5000 = true;
                     }
                 }
                 if (resultUsernfo[0].credit > 50000)
                 {
-                    Public_Class.Send1200 = Public_Class.Send5000 = false;
+                    PublicStaticClass.Send1200 = PublicStaticClass.Send5000 = false;
                 }
                 string[] to = new[] { mobile.ToString("00000000000") };
                 string[] content = { $"ورود دانش آموز {fullName} در تاریخ {inDate} ثبت گردید" };
@@ -150,30 +150,30 @@ namespace DM.Services
                 string[] vs = new[] { "09186620474" };
                 var resultUsernfo = _unitOfWorkClass.SMSClient.UserInfo("iaubijar", "M4228056");
                 //چک کردن اعتبار زیر 1200 تومن و توقف سرویس ارسال
-                if (resultUsernfo[0].credit < 12000 && !Public_Class.Send1200)
+                if (resultUsernfo[0].credit < 12000 && !PublicStaticClass.Send1200)
                 {
                     string[] creditMessage = { $"اعتبار سامانه پیامکی {resultUsernfo[0].credit} ریال می باشد سرویس متوقف گردید" };
                     var resultSend = _unitOfWorkClass.SMSClient.sendSms("iaubijar", "M4228056", from, vs, creditMessage, new string[] { }, "");
                     if (resultSend[0] > 0)
                     {
                         _loggerRepository.WriteMessageSenderLog($"Send Credit 1000 to PhoneNumber :  {vs} , {resultSend[0]}");
-                        Public_Class.Send1200 = true;
+                        PublicStaticClass.Send1200 = true;
                     }
                     return;
                 }
-                if (resultUsernfo[0].credit.Between(12001, 50000) && !Public_Class.Send5000)
+                if (resultUsernfo[0].credit.Between(12001, 50000) && !PublicStaticClass.Send5000)
                 {
                     string[] creditMessage = { $"اعتبار سامانه پیامکی {resultUsernfo[0].credit} ریال می باشد" };
                     var resultCredit = _unitOfWorkClass.SMSClient.sendSms("iaubijar", "M4228056", from, vs, creditMessage, new string[] { }, "");
                     if (resultCredit[0] > 0)
                     {
                         _loggerRepository.WriteMessageSenderLog($"Send Credit 5000 to PhoneNumber :  {vs}  , {resultCredit[0]}");
-                        Public_Class.Send5000 = true;
+                        PublicStaticClass.Send5000 = true;
                     }
                 }
                 if (resultUsernfo[0].credit > 50000)
                 {
-                    Public_Class.Send1200 = Public_Class.Send5000 = false;
+                    PublicStaticClass.Send1200 = PublicStaticClass.Send5000 = false;
                 }
                 string[] to = new[] { mobile.ToString("00000000000") };
                 string[] content = { $"خروج دانش آموز {fullName} در تاریخ {inDate} ثبت گردید" };

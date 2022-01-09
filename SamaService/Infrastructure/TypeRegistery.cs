@@ -2,7 +2,7 @@
 using SamaService.Models;
 using SamaService.Services;
 using StructureMap;
-namespace DM.Infrastructure
+namespace SamaService.Infrastructure
 {
     public class TypeRegistery : Registry
     {

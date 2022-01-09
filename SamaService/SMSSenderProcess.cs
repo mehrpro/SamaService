@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using DM.DTO;
-using DM.Infrastructure;
-using DM.Services;
-using DM.Models;
+using SamaService.DTO;
+using SamaService.Infrastructure;
+using SamaService.Services;
+using SamaService.Models;
 //using SamaService.ServiceReference1;
 namespace SamaService
 {
@@ -12,8 +12,7 @@ namespace SamaService
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IStudentRepository _studentRepository;
-        private readonly ITagRepository _tagRepository;
-        private readonly IStudentTagRepository _studentTagRepository;
+
         private readonly ITagRecorderRepository _tagRecorderRepository;
         private readonly IBirthRegisterRepository _birthRegisterRepository;
         private readonly ISenderRepository _senderRepository;
@@ -21,8 +20,7 @@ namespace SamaService
         //public StructureMap.Container SendContainer { get; set; }
         public SMSSenderProcess(IUnitOfWork unitOfWork,
             IStudentRepository studentRepository,
-            ITagRepository tagRepository,
-            IStudentTagRepository studentTagRepository,
+
             ITagRecorderRepository tagRecorderRepository,
             IBirthRegisterRepository birthRegisterRepository,
             ISenderRepository senderRepository
@@ -30,113 +28,101 @@ namespace SamaService
         {
             _unitOfWork = unitOfWork;
             _studentRepository = studentRepository;
-            _tagRepository = tagRepository;
-            _studentTagRepository = studentTagRepository;
+
             _tagRecorderRepository = tagRecorderRepository;
             _birthRegisterRepository = birthRegisterRepository;
             _senderRepository = senderRepository;
             _loggerRepository = loggerRepository;
         }
 
-        #region NewTags
-        /// <summary>
-        /// یافتن تگ های جدید و افزودن به بانک اطلاعاتی
-        /// </summary>
-        public void NewTags()
-        {
+        //#region NewTags
+        ///// <summary>
+        ///// یافتن تگ های جدید و افزودن به بانک اطلاعاتی
+        ///// </summary>
+        //public void NewTags()
+        //{
 
-            try
-            {
-                _loggerRepository.WriteMessageLog("NewTag");
-                var qry = _tagRecorderRepository.GetAllByCondition(x => x.Enables && x.SMS == false);
+        //    try
+        //    {
+        //        _loggerRepository.WriteMessageLog("NewTag");
+        //        var qry = _tagRecorderRepository.GetAllByCondition(x => x.Enables && x.SMS == false);
 
-                var qryAfterRemoveDublicate = qry.Select(x => x.TagID).ToList().RemoveDuplicates();
-                foreach (var item in qryAfterRemoveDublicate)
-                {
-                    var tag = _tagRepository.GetFirstOrDefualt(x => x.TagID_HEX == item);
+        //        var qryAfterRemoveDublicate = qry.Select(x => x.TagID).ToList().RemoveDuplicates();
+        //        foreach (var item in qryAfterRemoveDublicate)
+        //        {
+        //            var tag = _tagRepository.GetFirstOrDefualt(x => x.TagID_HEX == item);
 
-                    if (tag == null)
-                    {
-                        var newTag = new TagDTO()
-                        {
-                            TagID_HEX = item,
-                            CartView = HexToDecimal(item)
-                        };
-                        _tagRepository.Insert(newTag);
-                        _unitOfWork.SaveChanges();
-                        _loggerRepository.WriteMessageLog($"Save New TAG : {item} ViewLabel {HexToDecimal(item)}");
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                _loggerRepository.WriteErrorLog(e, "NewTags");
-            }
-
-
-        }
-        #endregion
-        #region HexToDecimal
-
-        private string HexToDecimal(string tagHex)
-        {
-            _loggerRepository.WriteMessageLog("HexToDecimal");
-            var hexValue = tagHex.Remove(0, 2).Remove(8);
-            int decValue = int.Parse(hexValue, System.Globalization.NumberStyles.HexNumber);
-            var str = decValue.ToString("0000000000");
-            return str;
-        }
-
-        #endregion
-        #region UpdateTagID
-
-        /// <summary>
-        /// حذف تگ های خام و بروزرسانی شناسه تگ ها
-        /// </summary>
-        public void UpdateTagID()
-        {
-            _loggerRepository.WriteMessageLog("UpdateTagID");
-            var listRemove = new List<TagRecorder>();
-            try
-            {
-                var qry = _tagRecorderRepository.GetAllByCondition(x => x.Enables && x.SMS == false && x.TagID_FK == null);
-                foreach (var item in qry)
-                {
-                    var result = _studentTagRepository.GetFirstOrDefault(x => x.Tag.TagID_HEX == item.TagID && x.Enabled);
-                    if (result == null)
-                    {
-                        listRemove.Add(item);
-                    }
-                    else
-                    {
-                        item.TagID_FK = result.TagID_FK;
-                        item.StudentID_FK = result.StudentID_FK;
-                    }
-                }
-                _unitOfWork.SaveChanges();
-            }
-            catch (Exception e)
-            {
-                _loggerRepository.WriteErrorLog(e, "UpdateTagID");
-
-            }
-            finally
-            {
-                try
-                {
-                    _loggerRepository.WriteMessageLog("Finally");
-                    _tagRecorderRepository.DeleteRange(listRemove);
-                    _unitOfWork.SaveChanges();
-                }
-                catch (Exception e)
-                {
-                    _loggerRepository.WriteErrorLog(e, "UpdateTagID Finally");
-                }
-            }
-        }
+        //            if (tag == null)
+        //            {
+        //                var newTag = new TagDTO()
+        //                {
+        //                    TagID_HEX = item,
+        //                    CartView = HexToDecimal(item)
+        //                };
+        //                _tagRepository.Insert(newTag);
+        //                _unitOfWork.SaveChanges();
+        //                _loggerRepository.WriteMessageLog($"Save New TAG : {item} ViewLabel {HexToDecimal(item)}");
+        //            }
+        //        }
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        _loggerRepository.WriteErrorLog(e, "NewTags");
+        //    }
 
 
-        #endregion
+        //}
+        //#endregion
+
+        //#region UpdateTagID
+
+        ///// <summary>
+        ///// حذف تگ های خام و بروزرسانی شناسه تگ ها
+        ///// </summary>
+        //public void UpdateTagID()
+        //{
+        //    _loggerRepository.WriteMessageLog("UpdateTagID");
+        //    var listRemove = new List<TagRecorder>();
+        //    try
+        //    {
+        //        var qry = _tagRecorderRepository.GetAllByCondition(x => x.Enables && x.SMS == false && x.TagID_FK == null);
+        //        foreach (var item in qry)
+        //        {
+        //            var result = _studentTagRepository.GetFirstOrDefault(x => x.Tag.TagID_HEX == item.TagID && x.Enabled);
+        //            if (result == null)
+        //            {
+        //                listRemove.Add(item);
+        //            }
+        //            else
+        //            {
+        //                item.TagID_FK = result.TagID_FK;
+        //                item.StudentID_FK = result.StudentID_FK;
+        //            }
+        //        }
+        //        _unitOfWork.SaveChanges();
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        _loggerRepository.WriteErrorLog(e, "UpdateTagID");
+
+        //    }
+        //    finally
+        //    {
+        //        try
+        //        {
+        //            _loggerRepository.WriteMessageLog("Finally");
+        //            _tagRecorderRepository.DeleteRange(listRemove);
+        //            _unitOfWork.SaveChanges();
+        //        }
+        //        catch (Exception e)
+        //        {
+        //            _loggerRepository.WriteErrorLog(e, "UpdateTagID Finally");
+        //        }
+        //    }
+        //}
+
+
+        //#endregion
         #region SMSSender
 
         /// <summary>

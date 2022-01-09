@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Linq;
-using DM.Models;
-using DM.Infrastructure;
-using DM.Services;
+using SamaService.Models;
+using SamaService.Infrastructure;
+using SamaService.Services;
 
 
 namespace SamaService
